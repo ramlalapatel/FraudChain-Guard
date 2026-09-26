@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Account, Transaction } from '../types';
 import { formatINR } from '../utils/riskEngine';
+import { generateLocalAmlResponse } from '../utils/localAmlEngine';
 
 interface ChatMessage {
   id: string;
@@ -151,11 +152,11 @@ How can I assist your investigation today?
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Server error occurred');
+        throw new Error(`Server returned ${response.status}`);
       }
+
+      const data = await response.json();
 
       const modelMsg: ChatMessage = {
         id: `mod-${Date.now()}`,
@@ -167,14 +168,17 @@ How can I assist your investigation today?
 
       setMessages((prev) => [...prev, modelMsg]);
     } catch (err: any) {
-      console.error('Chat error:', err);
-      const errorMsg: ChatMessage = {
-        id: `err-${Date.now()}`,
+      console.warn('Backend chat API unavailable, engaging local AML forensic engine:', err);
+      // Seamless simulated AML engine for standalone/GitHub Pages deployment
+      const fallbackReply = generateLocalAmlResponse(textToSend, transactions, accounts);
+      const modelMsg: ChatMessage = {
+        id: `mod-${Date.now()}`,
         role: 'model',
-        content: `⚠️ **Investigation Query Notice**: Unable to generate response. ${err?.message || 'Check server connection.'}`,
+        content: fallbackReply,
+        modelUsed: `${selectedModel} (Local AML Engine)`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
-      setMessages((prev) => [...prev, errorMsg]);
+      setMessages((prev) => [...prev, modelMsg]);
     } finally {
       setIsLoading(false);
     }
