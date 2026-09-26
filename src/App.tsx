@@ -23,7 +23,8 @@ import { TriggersHub } from './components/TriggersHub';
 import { IncidentReportModal } from './components/IncidentReportModal';
 import { GeminiChatbot } from './components/GeminiChatbot';
 import { VoiceConversationModal } from './components/VoiceConversationModal';
-import { CheckCircle2, AlertTriangle, ShieldAlert, Sparkles, X, MessageSquare, Radio, Bot } from 'lucide-react';
+import { WorkflowDossierModal } from './components/WorkflowDossierModal';
+import { CheckCircle2, AlertTriangle, ShieldAlert, Sparkles, X, MessageSquare, Radio, Bot, FileText } from 'lucide-react';
 
 export default function App() {
   const [accounts, setAccounts] = useState<Account[]>(INITIAL_ACCOUNTS);
@@ -39,6 +40,7 @@ export default function App() {
   const [targetTxnForModal, setTargetTxnForModal] = useState<Transaction | null>(null);
   const [activeModal, setActiveModal] = useState<'profileMismatch' | 'complaint' | 'verification' | 'exportReport' | null>(null);
   const [preselectedTxnIdForComplaint, setPreselectedTxnIdForComplaint] = useState<string | undefined>(undefined);
+  const [isWorkflowPdfOpen, setIsWorkflowPdfOpen] = useState<boolean>(false);
 
   // Gemini AI Chatbot & Voice Conversations
   const [isChatbotOpen, setIsChatbotOpen] = useState<boolean>(false);
@@ -354,6 +356,7 @@ export default function App() {
         onLaunchDemoTour={handleLaunchDemoTour}
         onOpenChat={() => setIsChatbotOpen(true)}
         onOpenVoice={() => setIsVoiceModalOpen(true)}
+        onOpenWorkflowPdf={() => setIsWorkflowPdfOpen(true)}
         activeCasesCount={activeCasesCount}
       />
 
@@ -593,8 +596,14 @@ export default function App() {
         onClose={() => setIsVoiceModalOpen(false)}
       />
 
+      {/* 8. Workflow Dossier & Presentation PDF Modal */}
+      <WorkflowDossierModal
+        isOpen={isWorkflowPdfOpen}
+        onClose={() => setIsWorkflowPdfOpen(false)}
+      />
+
       {/* Floating Action Trigger Dock for Fast Access */}
-      <div className="fixed bottom-6 left-6 z-40 flex items-center gap-2">
+      <div className="fixed bottom-6 left-6 z-40 flex items-center gap-2 print:hidden">
         <button
           onClick={() => setIsChatbotOpen(true)}
           className="px-3 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold flex items-center gap-2 shadow-xl shadow-cyan-950/60 border border-cyan-400/40 cursor-pointer hover:scale-105 transition-all"
@@ -611,6 +620,15 @@ export default function App() {
           <Radio className="w-4 h-4 text-purple-200 animate-pulse" />
           <span>Live Voice</span>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+        </button>
+
+        <button
+          onClick={() => setIsWorkflowPdfOpen(true)}
+          className="px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center gap-2 shadow-xl shadow-emerald-950/60 border border-emerald-400/40 cursor-pointer hover:scale-105 transition-all"
+          title="Open Workflow Presentation & Printable PDF"
+        >
+          <FileText className="w-4 h-4" />
+          <span>Workflow PDF</span>
         </button>
       </div>
 

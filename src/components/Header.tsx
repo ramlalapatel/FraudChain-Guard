@@ -10,7 +10,8 @@ import {
   PlusCircle, 
   RefreshCw,
   MessageSquare,
-  Radio
+  Radio,
+  FileText
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -21,6 +22,7 @@ interface HeaderProps {
   onLaunchDemoTour: (tourId: string) => void;
   onOpenChat: () => void;
   onOpenVoice: () => void;
+  onOpenWorkflowPdf: () => void;
   activeCasesCount: number;
 }
 
@@ -32,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
   onLaunchDemoTour,
   onOpenChat,
   onOpenVoice,
+  onOpenWorkflowPdf,
   activeCasesCount,
 }) => {
   return (
@@ -134,6 +137,16 @@ export const Header: React.FC<HeaderProps> = ({
               <Radio className="w-3.5 h-3.5 animate-pulse text-purple-200" />
               <span>Live Voice</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            </button>
+
+            {/* Workflow PDF & Presentation Dossier */}
+            <button
+              onClick={onOpenWorkflowPdf}
+              className="px-2.5 py-1.5 rounded-lg bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm shadow-emerald-900/40 transition cursor-pointer border border-emerald-400/40"
+              title="Open Printable Workflow PDF & Viva/Presentation Dossier"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Workflow PDF</span>
             </button>
 
             {/* Reset Data */}
