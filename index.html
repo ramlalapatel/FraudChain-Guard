@@ -12,27 +12,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-      // Load compiled stylesheet on static hosting like GitHub Pages
-      if (window.location.hostname.endsWith('github.io') || (!window.location.port && !window.location.hostname.includes('run.app'))) {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = './assets/index.css';
-        document.head.appendChild(link);
-      }
-    </script>
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
     <div id="root"></div>
-    <script type="module">
-      if (window.location.hostname.endsWith('github.io') || (!window.location.port && !window.location.hostname.includes('run.app'))) {
-        // Direct static production execution on GitHub Pages
-        import('./assets/index.js');
-      } else {
-        // AI Studio & Vite development environment
-        import('/src/main.tsx');
-      }
-    </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
 
