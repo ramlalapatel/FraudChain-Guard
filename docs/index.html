@@ -21,18 +21,10 @@
         document.head.appendChild(link);
       }
     </script>
+    <script type="module" crossorigin src="./assets/index.js"></script>
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
     <div id="root"></div>
-    <script type="module">
-      if (window.location.hostname.endsWith('github.io') || (!window.location.port && !window.location.hostname.includes('run.app'))) {
-        // Direct static production execution on GitHub Pages
-        import('./assets/index.js');
-      } else {
-        // AI Studio & Vite development environment
-        import('/src/main.tsx');
-      }
-    </script>
   </body>
 </html>
 
