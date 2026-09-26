@@ -1,0 +1,6 @@
+{
+  "name": "FraudChain Guard",
+  "description": "Intelligent Transaction Risk & Fraud-Chain Detection System for banks, simulating mule account ring detection, rapid forwarding tracing, and KYC evidence requests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
